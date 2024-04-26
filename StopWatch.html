@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stopwatch</title>
+</head>
+<body>
+    <div class="stopwatch">
+        <div id="display">00:00:00</div>
+        <button id="alt-btns">Start</button>
+        <button id="reset">Reset</button>
+    </div>
+</body>
+<script>
+    var time = 0;
+    var interval;
+    var display = document.getElementById("display");
+    var altBtns = document.getElementById("alt-btns");
+    var resetBtn = document.getElementById("reset");
+
+    function startTimer() {
+    altBtns.innerHTML = "Stop";
+    if (interval) {
+        clearInterval(interval);
+    }
+    interval = setInterval(() => {
+        time += 1;
+        display.innerHTML = Math.floor(time / 3600).toString().padStart(2, "0") + ":" + Math.floor((time % 3600) / 60).toString().padStart(2, "0") + ":" + Math.floor(time % 60).toString().padStart(2, "0");
+    }, 1000);
+    }
+
+    function stopTimer() {
+    altBtns.innerHTML = "Start";
+    clearInterval(interval);
+    interval = null;
+    }
+
+    function resetTimer() {
+    altBtns.innerHTML = "Start";
+    clearInterval(interval);
+    interval = null;
+    time = 0;
+    display.innerHTML = "00:00:00";
+    }
+
+    altBtns.onclick = function() {
+    if (interval) {
+        stopTimer();
+    } else {
+        startTimer();
+    }
+    }
+
+    resetBtn.onclick = resetTimer;
+</script>
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="watch">00:00:00</div>
+    <button id="ss">Start</button>
+    <button id="reset">reset</button>
+</body>
+<script>
+    let watch = document.querySelector('.watch');
+    let startBtn = document.querySelector('#ss');
+    let resetBtn = document.querySelector('#reset');
+    
+    let StartTime;
+    let running=false;
+    let elasped=0;
+
+    function startStop(){
+        if(running){
+            clearInterval(intertal);
+            running=false;
+            startBtn.textContent='Stop'
+        }
+        else{
+            StartTime=new Date().getTime()-elasped;
+            interval=setInterval(update,10);
+            running=true;
+            startBtn.textContent='Start'
+        }
+    };
+    function update(){
+        const currentTime = new Date().getTime();
+        elasped = currentTime - startTime;
+        const formattedTime = formatTime(elasped);
+        watch.textContent = formattedTime;
+    };
+    function formatTime(ms){
+        let totalSeconds = Math.floor(ms / 1000);
+        let hours = Math.floor(totalSeconds / 3600);
+        totalSeconds %= 3600;
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+
+        return `${hours}:${pad(minutes)}:${pad(seconds)}`;
+    };
+   function pad(num){
+        if (num < 10) {
+            return '0' + num;
+        }
+        return num;
+
+    }
+    
+    startBtn.addEventListener('click',startStop);
+    resetBtn.addEventListener('click',reset);
+
+</script>
+</html> -->
